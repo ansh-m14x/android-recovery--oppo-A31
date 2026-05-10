@@ -1,7 +1,7 @@
 on fs
     install_keyring
     setprop sys.usb.ffs.aio_compat 1
-    # Check if your device needs /system_root or just /system
+    # Updated path to include both lib64 and the hardware subfolder for keymaster/cryptoeng
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     setprop crypto.ready 1
     write /sys/class/power_supply/usb/otg_switch 1
@@ -20,22 +20,18 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
+# Updated with A31 specific synced blobs from mcRegistry
 service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry \
-    -r /vendor/app/mcRegistry/06090000000000000000000000000000.drbin \
     -r /vendor/app/mcRegistry/020f0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/05120000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/020b0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/05070000000000000000000000000000.drbin \
     -r /vendor/app/mcRegistry/030b0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/03100000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/030c0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/40188311faf343488db888ad39496f9a.drbin \
-    -r /vendor/app/mcRegistry/070c0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/090b0000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/0f5eed3c3b5a47afacca69a84bf0efad.drbin \
+    -r /vendor/app/mcRegistry/05120000000000000000000000000000.drbin \
+    -r /vendor/app/mcRegistry/07010000000000000000000000000000.drbin \
     -r /vendor/app/mcRegistry/07060000000000000000000000007169.drbin \
-    -r /vendor/app/mcRegistry/07407000000000000000000000000000.drbin \
-    -r /vendor/app/mcRegistry/9073f03a9618383bb1856eb3f990babd.drbin
+    -r /vendor/app/mcRegistry/07150000000000000000000000000000.drbin \
+    -r /vendor/app/mcRegistry/07170000000000000000000000000000.drbin \
+    -r /vendor/app/mcRegistry/09070000000000000000000000000000.drbin \
+    -r /vendor/app/mcRegistry/09080000000000000000000000000000.drbin \
+    -r /vendor/app/mcRegistry/09190000000000000000000000000000.drbin
     user root
     group root
     disabled
@@ -48,7 +44,7 @@ service hal_cryptoeng_oppo /system/bin/vendor.oppo.hardware.cryptoeng@1.0-servic
     disabled
     seclabel u:r:recovery:s0
 
-service keymaster-3-0 /system/bin/android.hardware.keymaster@3.0-service.trustonic
+service keymaster-3-0 /system/bin/android.hardware.keymaster@3.0-service
     user root
     group root drmrpc
     disabled
