@@ -1,4 +1,4 @@
-name: TWRP 10 Build - A31 Fixed
+name: TWRP 10 Build - A31 Fixed Python
 
 on:
   workflow_dispatch:
@@ -11,7 +11,6 @@ jobs:
       options: --privileged
 
     env:
-      # This prevents the tzdata prompt you encountered
       DEBIAN_FRONTEND: noninteractive
       TZ: Asia/Kolkata
 
@@ -19,19 +18,18 @@ jobs:
     - name: Prepare Environment
       run: |
         apt-get update
-        # Install tzdata first with noninteractive flag
         apt-get install -y tzdata
+        # Added python3, python3-pip, and python-is-python3
         apt-get install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev \
         gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
-        libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip python2 bc
+        libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip python3 \
+        python3-pip python-is-python3 bc
 
     - name: Install Repo Tool
       run: |
         mkdir -p ~/bin
         curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
         chmod a+x ~/bin/repo
-        # Ensure python2 is linked (Required for Android 10 repo sync)
-        ln -sf /usr/bin/python2 /usr/bin/python
 
     - name: Initialize & Sync Repo
       run: |
@@ -39,8 +37,9 @@ jobs:
         mkdir twrp && cd twrp
         git config --global user.name "ansh-m14x"
         git config --global user.email "ansh@example.com"
-        repo init --depth=1 -u https://github.com/minimal-twrp/android_bootable_recovery.git -b android-10
-        repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+        # Using python3 to call repo init directly to be safe
+        python3 ~/bin/repo init --depth=1 -u https://github.com/minimal-twrp/android_bootable_recovery.git -b android-10
+        python3 ~/bin/repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
     - name: Clone Device Tree
       run: |
