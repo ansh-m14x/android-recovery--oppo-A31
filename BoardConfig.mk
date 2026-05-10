@@ -16,13 +16,13 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/realme/RMX1941
+DEVICE_PATH := device/oppo/OP4C7D
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := RMX1941,RMX1945,RMX1943
+TARGET_OTA_ASSERT_DEVICE := CPH2015, CPH2081, OP4C7D
 
 # Architecture
 TARGET_ARCH := arm64
