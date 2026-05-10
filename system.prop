@@ -1,6 +1,4 @@
-#
 # system.prop for Oppo A31 (OP4C7D)
-#
 
 # Product Info
 ro.product.brand=oppo
@@ -18,18 +16,49 @@ ro.hardware=mt6765
 ro.hardware.kmsetkey=trustonic
 ro.vendor.mtk_trustonic_tee_support=1
 
-# Display / UI (Updated from Vendor Prop)
+# Display / UI
 ro.sf.lcd_density=320
 ro.sf.hwrotation=0
 ro.opengles.version=196610
 debug.sf.disable_backpressure=1
 
-# Correct reboot behavior for MTK
+# USB / ADB Initialization
 sys.usb.controller=musb-hdrc
-ro.service.adb.root=1
+ro.usb.controller=musb-hdrc
 persist.sys.usb.config=adb
+ro.service.adb.root=1
 
+# Treble & AVB
+ro.treble.enabled=true
+# system.prop for Oppo A31 (OP4C7D)
 
+# Product Info
+ro.product.brand=oppo
+ro.product.name=OP4C7D
+ro.product.model=OP4C7D
+ro.product.device=OP4C7D
+ro.build.product=OP4C7D
+ro.product.first_api_level=28
+
+# Platform & Hardware
+ro.board.platform=mt6765
+ro.mediatek.platform=MT6765
+ro.vendor.mediatek.platform=MT6765
+ro.hardware=mt6765
+ro.hardware.kmsetkey=trustonic
+ro.vendor.mtk_trustonic_tee_support=1
+
+# Display / UI
+ro.sf.lcd_density=320
+ro.sf.hwrotation=0
+ro.opengles.version=196610
+debug.sf.disable_backpressure=1
+
+# USB / ADB Initialization
+sys.usb.controller=musb-hdrc
+ro.usb.controller=musb-hdrc
+persist.sys.usb.config=adb
+ro.service.adb.root=1
 
 # Treble & AVB
 ro.treble.enabled=true
