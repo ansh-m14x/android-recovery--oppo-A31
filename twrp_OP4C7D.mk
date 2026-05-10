@@ -17,7 +17,7 @@
 #
 
 # Extra VNDK Versions
-PRODUCT_EXTRA_VNDK_VERSIONS := 29
+PRODUCT_EXTRA_VNDK_VERSIONS := 28
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
@@ -29,7 +29,7 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := OP4C7D
 PRODUCT_NAME := twrp_OP4C7D
-PRODUCT_BRAND := realme
+PRODUCT_BRAND := oppo
 PRODUCT_MODEL := OPPO A31
 PRODUCT_MANUFACTURER := OPPO
 PRODUCT_RELEASE_NAME := OPPO A31
