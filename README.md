@@ -1,12 +1,11 @@
-TWRP Device Tree for Realme C2
+TWRP Device Tree for OPPO A31 (CPH2015)
 ===========================================
 
-The Realme C2 is a budget range smartphone from Realme, announced in April 2019.
+The OPPO A31 is a budget-friendly smartphone from OPPO, announced in February 2020.
 
 ## Status
 
 **Working**:
-
 1. MTP
 2. Backup and Restore
 3. Flash GSI
@@ -15,31 +14,26 @@ The Realme C2 is a budget range smartphone from Realme, announced in April 2019.
 6. OTG
 
 **Not working**:
- NONE
-
-
+* None
 
 ## Device specifications
 
-Basic   | Spec Sheet
+Basic | Spec Sheet
 -------:|:-------------------------
-OS	| Android 9.0 (pie)	
-CPU     | Octa-core 2.0 GHz Cortex-A53
-Chipset | Mediatek MT6762 Helio P22 (12 nm)
-GPU     | PowerVR GE8320
-Memory  | 2GB/3GB RAM
-Storage | 16GB/32GB
-MicroSD | up to 64 GB (dedicated slot)
-Battery | Non-removable Li-Ion 4000 mAh battery
-Resolution | 720 x 1560 pixels, 19.5:9 ratio (~282 ppi density)
-Camera (Rear)  | 13 MP, f/2.2, 1/3.1", 1.12µm, PDAF & 2 MP, f/2.4, (depth)
-Rear Camera Features | LED flash, HDR, panorama
-Video	| 1080p@30fps	
-Camera (Front)  | 5 MP, f/2.0, 1/5", 1.12µm
-Features| Accelerometer, proximity, compass	
+OS | Android 9.0 (Pie), ColorOS 6.1
+CPU | Octa-core (4x2.3 GHz Cortex-A53 & 4x1.8 GHz Cortex-A53)
+Chipset | Mediatek MT6765V/CB Helio P35 (12 nm)
+GPU | PowerVR GE8320
+Memory | 4GB/6GB RAM
+Storage | 64GB/128GB (eMMC 5.1)
+MicroSD | microSDXC (dedicated slot)
+Battery | Non-removable Li-Po 4230 mAh battery
+Resolution | 720 x 1600 pixels, 20:9 ratio (~270 ppi density)
+Camera (Rear) | 12 MP (wide), 2 MP (macro), 2 MP (depth)
+Video | 1080p@30fps
+Camera (Front) | 8 MP, f/2.0 (wide)
+Features | Fingerprint (rear-mounted), accelerometer, gyro, proximity, compass
 
 ## Device picture
 
-![Realme C2](https://assets.mspimages.in/c/tr:w-1000,h-1000,c-at_max/15600-42-2.jpg "Realme C2")
-
-
+![OPPO A31](https://fdn2.gsmarena.com/vv/bigpic/oppo-a31-2020.jpg "OPPO A31")
