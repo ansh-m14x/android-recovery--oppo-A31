@@ -1,62 +1,109 @@
-name: TWRP 10 Build - A31 Fixed Python
+name: Recovery Build
 
 on:
   workflow_dispatch:
+    inputs:
+      MANIFEST_URL:
+        description: 'MANIFEST_URL'
+        required: true
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
+      MANIFEST_BRANCH:
+        description: 'MANIFEST_BRANCH'
+        required: true
+        default: 'twrp-12.1'
+      DEVICE_TREE_URL:
+        description: 'DEVICE_TREE_URL'
+        required: true
+        default: 'https://github.com/ansh-m14x/android_recovery_retrofit_OP4C7D'
+      DEVICE_TREE_BRANCH:
+        description: 'DEVICE_TREE_BRANCH'
+        required: true
+        default: 'android-10'
+      DEVICE_PATH:
+        description: 'DEVICE_PATH'
+        required: true
+        default: 'device/oppo/OP4C7D'
+      DEVICE_NAME:
+        description: 'DEVICE_NAME'
+        required: true
+        default: 'OP4C7D'
+      MAKEFILE_NAME:
+        description: 'MAKEFILE_NAME'
+        required: true
+        default: 'twrp_OP4C7D'
+      BUILD_TARGET:
+        description: 'BUILD_TARGET'
+        required: true
+        default: 'recovery'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:20.04
-      options: --privileged
-
-    env:
-      DEBIAN_FRONTEND: noninteractive
-      TZ: Asia/Kolkata
-
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-22.04 # 💡 Suggestion: 22.04 is more stable for older Python/Library dependencies in TWRP 12.1
+    permissions:
+      contents: write
     steps:
-    - name: Prepare Environment
-      run: |
-        apt-get update
-        apt-get install -y tzdata
-        # Added python3, python3-pip, and python-is-python3
-        apt-get install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev \
-        gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
-        libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip python3 \
-        python3-pip python-is-python3 bc
+    - name: Check Out
+      uses: actions/checkout@v4
 
-    - name: Install Repo Tool
+    - name: Cleanup
+      uses: rokibhasansagar/slimhub_actions@main
+
+    - name: Prepare environment
       run: |
-        mkdir -p ~/bin
+        sudo apt update
+        sudo apt install -y gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses-dev libsdl1.2-dev build-essential libgtk-3-dev libglu1-mesa-dev freeglut3-dev git libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses6 python3 tar zip unzip
+
+    - name: Install repo
+      run: |
+        mkdir ~/bin
         curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
         chmod a+x ~/bin/repo
+        sudo ln -sf ~/bin/repo /usr/bin/repo
 
-    - name: Initialize & Sync Repo
+    - name: Initialize repo
       run: |
-        export PATH=$HOME/bin:$PATH
-        mkdir twrp && cd twrp
-        git config --global user.name "ansh-m14x"
+        mkdir workspace
+        cd workspace
+        git config --global user.name "Ansh"
         git config --global user.email "ansh@example.com"
-        # Using python3 to call repo init directly to be safe
-        python3 ~/bin/repo init --depth=1 -u https://github.com/minimal-twrp/android_bootable_recovery.git -b android-10
-        python3 ~/bin/repo sync -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+        repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+      id: pwd
 
-    - name: Clone Device Tree
+    - name: Repo Sync
       run: |
-        cd twrp
-        git clone https://github.com/ansh-m14x/android_recovery_retrofit_OP4C7D -b android-10 device/oppo/OP4C7D
+        repo sync -j$(nproc --all) --force-sync --no-tags --no-clone-bundle
+      working-directory: workspace
 
-    - name: Build Recovery
+    - name: Clone device tree
       run: |
-        cd twrp
-        export PATH=$HOME/bin:$PATH
-        export ALLOW_MISSING_DEPENDENCIES=true
-        source build/envsetup.sh
-        lunch omni_OP4C7D-eng
-        make recoveryimage -j$(nproc --all)
+        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+      working-directory: workspace
 
-    - name: Upload Recovery
-      uses: actions/upload-artifact@v4
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
       with:
-        name: TWRP-A31-Recovery
-        path: twrp/out/target/product/OP4C7D/recovery.img
+        swap-size-gb: 12
+
+    - name: Building recovery
+      run: |
+        cd workspace
+        source build/envsetup.sh
+        export ALLOW_MISSING_DEPENDENCIES=true
+        
+        # 🏗️ Setup lunch and start build
+        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng
+        echo "🏗️ Starting Build for ${{ github.event.inputs.DEVICE_NAME }}..."
+        make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+      shell: bash
+
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
+        name: TWRP-A31-Dynamic-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
