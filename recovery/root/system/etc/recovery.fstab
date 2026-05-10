@@ -6,7 +6,7 @@
 /data            ext4      /dev/block/platform/bootdevice/by-name/userdata
 /vendor          ext4      /dev/block/platform/bootdevice/by-name/vendor
 /persistent      emmc      /dev/block/platform/bootdevice/by-name/frp
-/misc            emmc      /dev/block/platform/bootdevice/by-name/misc
+/misc            emmc      /dev/block/platform/bootdevice/by-name/para
 /metadata        emmc      /dev/block/platform/bootdevice/by-name/metadata
 /nvram           emmc      /dev/block/platform/bootdevice/by-name/nvram
 /nvdata          ext4      /dev/block/platform/bootdevice/by-name/nvdata
