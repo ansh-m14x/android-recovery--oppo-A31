@@ -58,7 +58,7 @@ jobs:
         source build/envsetup.sh
         
         # Selection and build
-        lunch omni_OP4C7D-eng
+        lunch Twrp_OP4C7D-eng
         make recoveryimage -j$(nproc --all)
 
     - name: Upload Recovery
