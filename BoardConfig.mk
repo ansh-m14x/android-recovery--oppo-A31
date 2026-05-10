@@ -171,6 +171,11 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libpuresoftkeymasterdevice \
     libresetprop \
     libsoftkeymasterdevice
+      lpdump \
+      dmctl \
+     lp_mount \
+     liblp
+
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
