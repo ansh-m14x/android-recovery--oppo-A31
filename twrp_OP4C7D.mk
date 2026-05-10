@@ -16,10 +16,6 @@
 # limitations under the License.
 #
 
-# Dynamic Partition
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-PRODUCT_RETROFIT_DYNAMIC_PARTITIONS := true
-
 # Extra VNDK Versions
 PRODUCT_EXTRA_VNDK_VERSIONS := 29
 
@@ -50,6 +46,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.build.date.utc=0
 
 # Dimen
-TARGET_SCREEN_HEIGHT := 1560
+TARGET_SCREEN_HEIGHT := 1600
 TARGET_SCREEN_WIDTH := 720
 TW_THEME := portrait_hdpi
