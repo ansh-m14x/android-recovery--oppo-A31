@@ -31,17 +31,17 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := RMX1941
-PRODUCT_NAME := twrp_RMX1941
+PRODUCT_DEVICE := OP4C7D
+PRODUCT_NAME := twrp_OP4C7D
 PRODUCT_BRAND := realme
-PRODUCT_MODEL := Realme C2
-PRODUCT_MANUFACTURER := realme
-PRODUCT_RELEASE_NAME := Realme C2
+PRODUCT_MODEL := OPPO A31
+PRODUCT_MANUFACTURER := OPPO
+PRODUCT_RELEASE_NAME := OPPO A31
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=RMX1941 \
-    BUILD_PRODUCT=RMX1941 \
-    TARGET_DEVICE=RMX1941
+    PRODUCT_NAME=OP4C7D \
+    BUILD_PRODUCT=OP4C7D \
+    TARGET_DEVICE=OP4C7D
 
 # HACK: Set vendor patch level
 PRODUCT_PRODUCT_PROPERTIES += \
