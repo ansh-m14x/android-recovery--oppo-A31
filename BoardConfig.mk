@@ -150,7 +150,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster_portable \
     libpuresoftkeymasterdevice \
     libresetprop \
-    libsoftkeymasterdevice \
+    libsoftkeymasterdevice
 
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
