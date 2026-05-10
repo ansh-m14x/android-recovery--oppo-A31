@@ -162,6 +162,7 @@ TARGET_DISABLE_TRIPLE_BUFFERING := false
 RECOVERY_SDCARD_ON_DATA := true
 
 # Additional binaries & libraries needed for recovery
+# Additional binaries & libraries needed for recovery
 TARGET_RECOVERY_DEVICE_MODULES += \
     ashmemd_aidl_interface-cpp \
     libashmemd_client \
@@ -170,11 +171,11 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster_portable \
     libpuresoftkeymasterdevice \
     libresetprop \
-    libsoftkeymasterdevice
-      lpdump \
-      dmctl \
-     lp_mount \
-     liblp
+    libsoftkeymasterdevice \
+    lpdump \
+    dmctl \
+    lp_mount \
+    liblp
 
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
