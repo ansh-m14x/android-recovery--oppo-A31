@@ -36,4 +36,4 @@ Features | Fingerprint (rear-mounted), accelerometer, gyro, proximity, compass
 
 ## Device picture
 
-![OPPO A31](https://fdn2.gsmarena.com/vv/bigpic/oppo-a31-2020.jpg "OPPO A31")
+![OPPO A31](https://www.google.com/search?q=oppo+a31+images&oq=oppo+a31+images&gs_lcrp=EgZjaHJvbWUyCQgAEEUYORiABDIICAEQABgWGB4yCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjIICAcQABgWGB4yDQgIEAAYhgMYgAQYigUyDQgJEAAYhgMYgAQYigUyBwgKEAAY7wUyBwgLEAAY7wUyCggMEAAYgAQYogTSAQg2ODA0ajBqNKgCArACAQ&client=ms-android-samsung-ss&sourceid=chrome-mobile&ie=UTF-8#sv=CAMScRoyKhBlLWgwWjdSeVExbE1kTjhNMg5oMFo3UnlRMWxNZE44TToOTDMwRkNlMkM1M01oaE0gBCoxChtfelI0QWFyYWdONUtVc2VNUGtKLWQ0UU1fNDASEGUtaDBaN1J5UTFsTWROOE0YADABSgQIARACGAcgyvT1lAxKCBACGAEgAigB "OPPO A31")
