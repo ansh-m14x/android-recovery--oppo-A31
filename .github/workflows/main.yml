@@ -1,37 +1,53 @@
-name: Sync mcRegistry Blobs
+name: TWRP 10 Build - A31 Container
 
 on:
-  workflow_dispatch: # Allows you to run this manually
+  workflow_dispatch:
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:20.04
+      options: --privileged # Necessary for some mounting tasks in Android builds
+
     steps:
-      - name: Checkout My Repo
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Prepare Environment
+      run: |
+        apt-get update
+        apt-get install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev \
+        gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
+        libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip python bc
 
-      - name: Clone Source Repo
-        run: |
-          git clone --depth 1 -b main https://github.com/KAGA-KOKO/android-recovery-OP4C7D source_repo
+    - name: Install Repo Tool
+      run: |
+        mkdir -p ~/bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        echo "PATH=$HOME/bin:$PATH" >> $GITHUB_ENV
 
-      - name: Copy mcRegistry Files
-        run: |
-          # Create the destination directory if it doesn't exist
-          mkdir -p recovery/root/vendor/app/mcRegistry
-          
-          # Copy all drbin, tlbin, and tabin files
-          cp -r source_repo/recovery/root/vendor/app/mcRegistry/* recovery/root/vendor/app/mcRegistry/
-          
-          # Clean up the cloned source
-          rm -rf source_repo
+    - name: Initialize & Sync Repo
+      run: |
+        mkdir twrp && cd twrp
+        git config --global user.name "ansh-m14x"
+        git config --global user.email "ansh@example.com"
+        ~/bin/repo init --depth=1 -u https://github.com/minimal-twrp/android_bootable_recovery.git -b android-10
+        ~/bin/repo sync -j$(nproc --all)
 
-      - name: Commit and Push
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add recovery/root/vendor/app/mcRegistry/*
-          git commit -m "Sync: Update mcRegistry blobs from KAGA-KOKO" || exit 0
-          git push
+    - name: Clone Device Tree
+      run: |
+        cd twrp
+        git clone https://github.com/ansh-m14x/android_recovery_retrofit_OP4C7D -b android-10 device/oppo/OP4C7D
 
+    - name: Build Recovery
+      run: |
+        cd twrp
+        export ALLOW_MISSING_DEPENDENCIES=true
+        source build/envsetup.sh
+        lunch omni_OP4C7D-eng
+        make recoveryimage -j$(nproc --all)
+
+    - name: Upload Recovery
+      uses: actions/upload-artifact@v4
+      with:
+        name: TWRP-A31-Recovery
+        path: twrp/out/target/product/OP4C7D/recovery.img
