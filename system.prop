@@ -24,10 +24,11 @@ ro.sf.hwrotation=0
 ro.opengles.version=196610
 debug.sf.disable_backpressure=1
 
-# USB / ADB
-persist.sys.usb.config=mtp,adb
-ro.sys.usb.storage.type=mtp
-ro.usb.controller=musb-hdrc
+# Correct reboot behavior for MTK
+sys.usb.controller=musb-hdrc
+ro.service.adb.root=1
+persist.sys.usb.config=adb
+
 
 
 # Treble & AVB
