@@ -2,21 +2,28 @@
 /dev/block/platform/bootdevice/by-name/recovery          /recovery       emmc        defaults                    defaults
 /dev/block/platform/bootdevice/by-name/boot              /boot           emmc        defaults                    defaults
 
-/dev/block/platform/bootdevice/by-name/system            /system         erofs       ro                          defaults
-/dev/block/platform/bootdevice/by-name/vendor            /vendor         erofs       ro                          defaults
+# Converted System and Vendor blocks to EXT4
+/dev/block/platform/bootdevice/by-name/system            /system         ext4        ro,barrier=1                wait
+/dev/block/platform/bootdevice/by-name/vendor            /vendor         ext4        ro,barrier=1                wait
 
-/dev/block/platform/bootdevice/by-name/cache             /cache          ext4        noatime,nosuid,nodev        defaults
+# Cache & Storage configurations
+/dev/block/platform/bootdevice/by-name/cache             /cache          ext4        noatime,nosuid,nodev        wait,check,formattable
+/dev/block/platform/bootdevice/by-name/metadata          /metadata       emmc        defaults                    defaults
+
+# Dual-FS Support for Userdata (Checks ext4 first, drops back to f2fs if needed)
 /dev/block/platform/bootdevice/by-name/userdata          /data           ext4        noatime,nosuid,nodev        wait,check
+/dev/block/platform/bootdevice/by-name/userdata          /data           f2fs        noatime,nosuid,nodev,discard,lazytime,inline_xattr,inline_data    wait,check,formattable
 
 /dev/block/platform/bootdevice/by-name/frp               /persistent     emmc        defaults                    defaults
-/dev/block/platform/bootdevice/by-name/metadata          /metadata       emmc        defaults                    defaults
 /dev/block/platform/bootdevice/by-name/boot_para         /boot_para      emmc        defaults                    defaults
 /dev/block/platform/bootdevice/by-name/dtbo              /dtbo           emmc        defaults                    defaults
 /dev/block/platform/bootdevice/by-name/nvram             /nvram          emmc        defaults                    defaults
 /dev/block/platform/bootdevice/by-name/nvdata            /nvdata         ext4        noatime,nosuid,nodev        wait
 /dev/block/platform/bootdevice/by-name/nvcfg             /nvcfg          ext4        noatime,nosuid,nodev        wait
 /dev/block/platform/bootdevice/by-name/vbmeta            /vbmeta         emmc        defaults                    defaults
-/dev/block/platform/bootdevice/by-name/para              /para           emmc        defaults                    defaults
+
+# Point hardcoded /misc target straight to the physical para partition block
+/dev/block/platform/bootdevice/by-name/para              /misc           emmc        defaults                    defaults
 
 # Removable Storage
 /dev/block/mmcblk1p1                                    /external_sd    vfat        defaults                    voldmanaged=sdcard1:auto
