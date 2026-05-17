@@ -25,7 +25,7 @@
 /vbmeta           emmc     /dev/block/platform/bootdevice/by-name/vbmeta                             flags=display="Vbmeta";backup=1;flashimg=1
 
 # The 'para' partition replaces 'misc' on this device
-/para             emmc     /dev/block/platform/bootdevice/by-name/para                               flags=display="Para"
+/para             emmc     /dev/block/platform/bootdevice/by-name/para                               flags=display="Para";wipeingui
 
 # External devices
 /external_sd      auto     /dev/block/mmcblk1p1       /dev/block/mmcblk1                             flags=display="Micro SD card";storage;wipeingui;removable
