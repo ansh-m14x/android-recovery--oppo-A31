@@ -12,4 +12,5 @@ TARGET_RECOVERY_UI_MARGIN_WIDTH := 0
 # Custom Recovery Init Configuration Scripts
 # ==========================================
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init.recovery.reboot.rc:recovery/root/init.recovery.reboot.rc
+    $(LOCAL_PATH)/recovery/root/init.recovery.reboot.rc:$(TARGET_RECOVERY_ROOT_OUT)/init.recovery.reboot.rc
+
