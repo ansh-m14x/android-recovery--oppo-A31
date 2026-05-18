@@ -1,0 +1,17 @@
+# ========================================================
+# Custom Hardware Reboot Handling Overrides (Recovery Only)
+# ========================================================
+
+on property:sys.reboot=recovery
+    stop adbd
+    trigger shutdown_recovery_services
+    write /sys/power/reboot recovery
+
+# Safely kill active background daemons to prevent partition unmount locks
+on shutdown_recovery_services
+    stop hal_cryptoeng_oppo
+    stop mobicore
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+    stop keystore
+
