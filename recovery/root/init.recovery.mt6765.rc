@@ -1,12 +1,67 @@
 on fs
     install_keyring
     setprop sys.usb.ffs.aio_compat 1
-    # Updated path to include both lib64 and the hardware subfolder for keymaster/cryptoeng
+    
+    # Export system library paths for keymaster/cryptoeng
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     setprop crypto.ready 1
     write /sys/class/power_supply/usb/otg_switch 1
 
-# Standard services for MTK decryption
+    # ADB/ConfigFS Setup
+    mount configfs none /config
+    mkdir /dev/usb-ffs 0770 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    
+    mkdir /config/usb_gadget/g1 0770 shell shell
+    mkdir /config/usb_gadget/g1/strings/0x409 0770 shell shell
+    mkdir /config/usb_gadget/g1/functions/ffs.adb 0770 shell shell
+    mkdir /config/usb_gadget/g1/configs/b.1 0770 shell shell
+    mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+
+on boot
+    # Initialize USB ConfigFS parameters
+    setprop sys.usb.configfs 1
+    
+    # Oppo USB Identification Strings
+    write /config/usb_gadget/g1/idVendor 0x22d9
+    write /config/usb_gadget/g1/idProduct 0x2769
+    write /config/usb_gadget/g1/bcdDevice 0x0223
+    write /config/usb_gadget/g1/bcdUSB 0x0200
+    
+    # Device context strings
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.serialno}
+    write /config/usb_gadget/g1/strings/0x409/manufacturer "OPPO"
+    write /config/usb_gadget/g1/strings/0x409/product "OP4C7D Recovery"
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "adb"
+    
+    # Link ADB function template to configuration container
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    
+    # Direct USB Gadget Engine to hardware controller
+    write /config/usb_gadget/g1/UDC "musb-hdrc"
+    
+    # Force ADB daemon ignition
+    setprop sys.usb.config adb
+    start adbd
+
+on property:hwservicemanager.ready=true
+    start hal_cryptoeng_oppo
+    start mobicore
+    start keymaster-3-0
+    start gatekeeper-1-0
+
+# Shutdown services when decryption tasks are completed
+on property:twrp.decrypt.done=true && property:twrp.all.users.decrypted=true
+    stop mobicore
+    stop hal_cryptoeng_oppo
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+
+# ==========================================
+# Core Support Services Declarations
+# ==========================================
+
 service keystore_auth /system/bin/keystore_auth
     oneshot
     user system
@@ -20,7 +75,6 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
-# Updated with A31 specific synced blobs from mcRegistry
 service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry \
     -r /vendor/app/mcRegistry/020f0000000000000000000000000000.drbin \
     -r /vendor/app/mcRegistry/030b0000000000000000000000000000.drbin \
@@ -37,7 +91,6 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
     disabled
     seclabel u:r:recovery:s0
 
-# CRITICAL for OPPO FBE Decryption
 service hal_cryptoeng_oppo /system/bin/vendor.oppo.hardware.cryptoeng@1.0-service
     user root
     group root drmrpc sdcard_rw sdcard_r
@@ -55,16 +108,3 @@ service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
     group root
     disabled
     seclabel u:r:recovery:s0
-
-on property:hwservicemanager.ready=true
-    start hal_cryptoeng_oppo
-    start mobicore
-    start keymaster-3-0
-    start gatekeeper-1-0
-
-# Shutdown services when decryption is done to save resources
-on property:twrp.decrypt.done=true && property:twrp.all.users.decrypted=true
-    stop mobicore
-    stop hal_cryptoeng_oppo
-    stop keymaster-3-0
-    stop gatekeeper-1-0
