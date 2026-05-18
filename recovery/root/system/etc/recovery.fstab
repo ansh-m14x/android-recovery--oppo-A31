@@ -9,7 +9,8 @@
 /cache           ext4      /dev/block/platform/bootdevice/by-name/cache
 
 # Data Partition (F2FS Only - Single Entry)
-/data            f2fs      /dev/block/platform/bootdevice/by-name/userdata                           flags=encryptable=ice:aes-256-xts
+/data            f2fs      /dev/block/platform/bootdevice/by-name/userdata                           flags=encryptable=ice:aes-256-xts;fsflags="discard"
+
 
 # Vendor Partition (EXT4 Only - Writable)
 /vendor          ext4      /dev/block/platform/bootdevice/by-name/vendor                             flags=backup=1;display="Vendor"
