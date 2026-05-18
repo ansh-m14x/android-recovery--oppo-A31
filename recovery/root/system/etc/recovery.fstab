@@ -25,6 +25,7 @@
 # Point hardcoded /misc target straight to the physical para partition block
 /dev/block/platform/bootdevice/by-name/para              /misc           emmc        defaults                    defaults
 
-# Removable Storage
-/dev/block/mmcblk1p1                                    /external_sd    vfat        defaults                    voldmanaged=sdcard1:auto
-/dev/block/sda1                                         /usb_otg        vfat        defaults                    voldmanaged=usb:auto
+# Removable Storage (Fixed flags for pure Lineage Recovery mounting)
+/dev/block/mmcblk1p1                                    /external_sd    vfat        defaults                    recoveryonly
+/dev/block/sda1                                         /usb_otg        vfat        defaults                    recoveryonly
+
