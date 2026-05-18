@@ -119,6 +119,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # Vendor Output Target
 TARGET_COPY_OUT_VENDOR := vendor
+# Storage Volumes Configuration
+RECOVERY_SDCARD_ON_DATA := true
 
 # Recovery UI Configurations
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
