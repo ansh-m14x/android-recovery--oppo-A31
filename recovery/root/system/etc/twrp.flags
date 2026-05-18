@@ -1,0 +1,2 @@
+/data            ext4      /dev/block/platform/bootdevice/by-name/userdata                           flags=backup=1;wipeui
+
