@@ -8,3 +8,8 @@ TARGET_RECOVERY_UI_SCREEN_HEIGHT := 1560
 TARGET_RECOVERY_UI_MARGIN_HEIGHT := 100
 TARGET_RECOVERY_UI_MARGIN_WIDTH := 0
 
+# ==========================================
+# Custom Recovery Init Configuration Scripts
+# ==========================================
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/init.recovery.reboot.rc:recovery/root/init.recovery.reboot.rc
