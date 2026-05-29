@@ -12,6 +12,9 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     
     steps:
+      - name: Cleanup
+        uses: rokibhasansagar/slimhub_actions@main
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -28,7 +31,6 @@ jobs:
           mkdir -p ~/bin
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
           chmod a+x ~/bin/repo
-          # Add to PATH for this and subsequent steps
           echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Initialize and Sync
@@ -41,7 +43,6 @@ jobs:
       - name: Prepare Device Tree
         run: |
           mkdir -p shrp/device/oppo/A31
-          # Use rsync to copy device tree files, excluding the workflow file itself
           rsync -av --exclude='.github' ./ shrp/device/oppo/A31/
 
       - name: Build SHRP
