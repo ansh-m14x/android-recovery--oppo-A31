@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: |
@@ -25,14 +25,13 @@ jobs:
 
       - name: Setup Repo
         run: |
-          mkdir ~/bin
+          mkdir -p ~/bin
           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
           chmod a+x ~/bin/repo
-          export PATH=~/bin:$PATH
+          echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Initialize and Sync
         run: |
-          export PATH=~/bin:$PATH
           mkdir shrp
           cd shrp
           repo init -u https://github.com/SHRP/manifest.git -b v3_11.0
@@ -40,16 +39,13 @@ jobs:
 
       - name: Prepare Device Tree
         run: |
-          # Copy your local device tree to the source tree
-          # Adjust path based on your device tree structure
+          # Ensure target directory exists
           mkdir -p shrp/device/oppo/A31
-          cp -r * shrp/device/oppo/A31/ 
-          # Note: Ensure the copy doesn't include the .github folder itself 
-          # to avoid recursive errors.
+          # Copy everything except the .github folder to the source tree
+          rsync -av --exclude='.github' ./ shrp/device/oppo/A31/
 
       - name: Build SHRP
         run: |
-          export PATH=~/bin:$PATH
           cd shrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
@@ -57,7 +53,8 @@ jobs:
           mka recoveryimage
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SHRP_Recovery
           path: shrp/out/target/product/OP4C7D/*.img
+          if-no-files-found: error
