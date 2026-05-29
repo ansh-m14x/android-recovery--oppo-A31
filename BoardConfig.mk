@@ -165,6 +165,31 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libresetprop.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libsoftkeymasterdevice.so
 
+# TWRP Configuration
+TW_THEME := portrait_hdpi
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_DEVICE_VERSION := By Ansh_m14x
+TW_MAX_BRIGHTNESS := 2047
+TW_DEFAULT_BRIGHTNESS := 560
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
+TW_USE_TOOLBOX := true
+TW_NO_SCREEN_BLANK := true
+TW_NO_BATT_PERCENT := false
+TW_EXCLUDE_TWRPAPP := true
+TW_EXCLUDE_SUPERSU := true
+TW_EXCLUDE_NANO := true
+TW_OZIP_DECRYPT_KEY := 0000
+TW_EXCLUDE_DEFAULT_USB_INIT := false
+TW_HAS_MTP := true
+ENABLE_CPUSETS := true
+ENABLE_SCHEDBOOST := true
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_SKIP_COMPATIBILITY_CHECK := true
+TW_Y_OFFSET := 52
+TW_H_OFFSET := -52
+
 
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
