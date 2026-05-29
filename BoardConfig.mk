@@ -165,30 +165,6 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libresetprop.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libsoftkeymasterdevice.so
 
-# TWRP Configuration
-TW_THEME := portrait_hdpi
-TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_DEVICE_VERSION := By Ansh_m14x
-TW_MAX_BRIGHTNESS := 2047
-TW_DEFAULT_BRIGHTNESS := 560
-TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
-TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
-TW_USE_TOOLBOX := true
-TW_NO_SCREEN_BLANK := true
-TW_NO_BATT_PERCENT := false
-TW_EXCLUDE_TWRPAPP := true
-TW_EXCLUDE_SUPERSU := true
-TW_EXCLUDE_NANO := true
-TW_OZIP_DECRYPT_KEY := 0000
-TW_EXCLUDE_DEFAULT_USB_INIT := false
-TW_HAS_MTP := true
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
-TW_SCREEN_BLANK_ON_BOOT := true
-TW_SKIP_COMPATIBILITY_CHECK := true
-TW_Y_OFFSET := 52
-TW_H_OFFSET := -52
 
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
@@ -204,3 +180,24 @@ TW_INCLUDE_FUSE_EXFAT := true
 
 # NTFS Support
 TW_INCLUDE_FUSE_NTFS := true
+
+#SHRP Device Specific Properties
+SHRP_PATH := device/oppo/OP4C7D
+SHRP_MAINTAINER := SIDDK
+SHRP_OFFICIAL := true
+SHRP_DEVICE_CODE := OP4C7D
+SHRP_REC_TYPE := Treble
+SHRP_DEVICE_TYPE := A_only
+SHRP_EDL_MODE := 0
+SHRP_EXTERNAL := /external_sd
+SHRP_INTERNAL := /sdcard
+SHRP_OTG := /usb_otg
+SHRP_FLASH := 1
+SHRP_REC := /dev/block/platform/bootdevice/by-name/recovery
+SHRP_NOTCH := true
+SHRP_DARK := true
+SHRP_CUSTOM_FLASHLIGHT := true
+SHRP_FONP_1 := /sys/class/leds/flashlight/brightness
+SHRP_FLASH_MAX_BRIGHTNESS := 2
+SHRP_STATUSBAR_RIGHT_PADDING := 40
+SHRP_STATUSBAR_LEFT_PADDING := 40
