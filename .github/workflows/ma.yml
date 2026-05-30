@@ -3,7 +3,6 @@ name: OrangeFox - Build
 # Credits to:
 # https://github.com/TeamWin
 # https://gitlab.com/OrangeFox
-# https://github.com/azwhikaru for Recovery Builder Template
 # And all Contributors in every repositories I used
 
 on:
@@ -20,19 +19,19 @@ on:
       DEVICE_TREE:
         description: 'OrangeFox Device Tree'
         required: true
-        default: 'https://github.com/cd-Crypton/custom_recovery_tree_realme_nashc'
+        default: 'https://github.com/ansh-m14x/android-recovery--oppo-A31'
       DEVICE_TREE_BRANCH:
         description: 'OrangeFox Device Tree Branch'
         required: true
-        default: 'android-12.1'
+        default: 'ofox'
       DEVICE_PATH:
         description: 'Specify your Device Path'
         required: true
-        default: 'device/realme/nashc'
+        default: 'device/oppo/OP4C7D'
       DEVICE_NAME:
         description: 'Specify your Device Codename'
         required: true
-        default: 'nashc'
+        default: 'OP4C7D'
       BUILD_TARGET:
         description: 'Specify your Build Target'
         required: true
