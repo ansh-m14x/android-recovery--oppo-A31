@@ -20,7 +20,7 @@ jobs:
         USER_NAME: 'YourName'
         USER_EMAIL: 'YourE-mail@gmail.com'
         DEVICE_TREE: 'https://github.com/ansh-m14x/android-recovery--oppo-A31'
-        DEVICE_TREE_BRANCH: 'ofox'
+        DEVICE_TREE_BRANCH: 'Twrp'
         DEVICE_PATH: 'device/oppo/OP4C7D'
         DEVICE_NAME: 'OP4C7D'
         BUILD_TARGET: 'recovery'
