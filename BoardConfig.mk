@@ -100,8 +100,8 @@ TARGET_USES_64_BIT_BINDER := true
 TARGET_IS_64_BIT := true
 
 # Crypto
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_CRYPTO := false
+TW_INCLUDE_CRYPTO_FBE := false
 
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
@@ -140,30 +140,6 @@ RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TARGET_DISABLE_TRIPLE_BUFFERING := false
 RECOVERY_SDCARD_ON_DATA := true
 
-# Additional binaries & libraries needed for recovery
-# Additional binaries & libraries needed for recovery
-TARGET_RECOVERY_DEVICE_MODULES += \
-    ashmemd_aidl_interface-cpp \
-    libashmemd_client \
-    libkeymaster3device \
-    libkeymaster_messages \
-    libkeymaster_portable \
-    libpuresoftkeymasterdevice \
-    libresetprop \
-    libsoftkeymasterdevice \
-    adbd \
-    reboot \
-    sh
-
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster3device.so \
-     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_portable.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libresetprop.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libsoftkeymasterdevice.so
 
 # TWRP Configuration
 TW_THEME := portrait_hdpi
@@ -196,11 +172,11 @@ PLATFORM_VERSION := 99.87.36
 VENDOR_SECURITY_PATCH := 2099-12-31
 
 # Debugging
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true
-
+# TWRP_INCLUDE_LOGCAT := true
+# TARGET_USES_LOGD := true
+TW_INCLUDE_BUSYBOX := false
 # exFAT FS Support
-TW_INCLUDE_FUSE_EXFAT := true
+# TW_INCLUDE_FUSE_EXFAT := true
 
 # NTFS Support
-TW_INCLUDE_FUSE_NTFS := true
+# TW_INCLUDE_FUSE_NTFS := true
